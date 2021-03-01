@@ -976,14 +976,16 @@ public class Janela_Principal extends javax.swing.JFrame {
 
     private void con_btn_gerareventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_con_btn_gerareventosActionPerformed
         int lotacao_maxima_cafe;
-        int lotacao_maxima_sala = 0;
+        int lotacao_maxima_sala;
+        int lotacao_maxima_sala_total = 0;
         int sala_menor = 0;
         int numero_salas = 0;
         int contador = 0;
         int contador2 = 1;
         
         Participantes_processados Pc = new Participantes_processados();
-       
+        Salas_processadas Sp = new Salas_processadas();
+        
         for (int i = 2;i<lista_salas.size();i++){
             if (lista_salas.get(i).getLotacao() < sala_menor){
                 sala_menor = lista_salas.get(i).getLotacao();
@@ -991,17 +993,35 @@ public class Janela_Principal extends javax.swing.JFrame {
         }
         for (int i = 2;i<lista_salas.size();i++){
             if (lista_salas.get(i).getLotacao() > sala_menor){
-                lotacao_maxima_sala = sala_menor + 1;            
-            }           
-            lotacao_maxima_sala = lotacao_maxima_sala + lista_salas.get(i).getLotacao();
+                lotacao_maxima_sala = sala_menor + 1;
+                lista_salasproc.get(i).setAlocacao(lotacao_maxima_sala);
+            }
+            else{
+                lotacao_maxima_sala = lista_salas.get(i).getLotacao();
+                lista_salasproc.get(i).setAlocacao(lotacao_maxima_sala);
+            }                
+            
+            lotacao_maxima_sala_total = lotacao_maxima_sala + lotacao_maxima_sala_total;
+            lista_salasproc.get(i).setNome(lista_salas.get(i).getNome());
+            lista_salasproc.get(i).setTipo(lista_salas.get(i).getTipo());
+            
         }
         
         if (lista_salas.get(0).getLotacao() < lista_salas.get(1).getLotacao()){
             lotacao_maxima_cafe = lista_salas.get(0).getLotacao() * 2 + 1;
+            lista_salasproc.get(0).setAlocacao(lista_salas.get(0).getLotacao());
+            lista_salasproc.get(1).setAlocacao(lista_salas.get(1).getLotacao()+1);
+        }
+        else if (lista_salas.get(0).getLotacao() > lista_salas.get(1).getLotacao()){
+            lotacao_maxima_cafe = lista_salas.get(1).getLotacao() * 2 + 1;
+            lista_salasproc.get(1).setAlocacao(lista_salas.get(1).getLotacao());
+            lista_salasproc.get(0).setAlocacao(lista_salas.get(0).getLotacao()+1);
         }
         else{
-            lotacao_maxima_cafe = lista_salas.get(1).getLotacao() * 2 + 1;
-        }
+            lotacao_maxima_cafe = lista_salas.get(1).getLotacao() * 2;
+            lista_salasproc.get(1).setAlocacao(lista_salas.get(1).getLotacao());
+            lista_salasproc.get(0).setAlocacao(lista_salas.get(0).getLotacao());
+        }        
         
         
         if (lista_salas.size() < 4){
@@ -1011,13 +1031,17 @@ public class Janela_Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "O evento excedeu a capacidade máxima das salas de café");
         }
         
-        else if (lista_partc.size() > lotacao_maxima_sala){            
+        else if (lista_partc.size() > lotacao_maxima_sala_total){            
             JOptionPane.showMessageDialog(this, "O evento excedeu a capacidade máxima das salas de evento");
         }
         
         else{
             
-            
+            for (int i=0; i<lotacao_maxima_sala_total; i++){
+                
+                
+                
+            }
             
             
             
