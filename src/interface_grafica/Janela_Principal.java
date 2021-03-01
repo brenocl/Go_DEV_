@@ -6,11 +6,13 @@
 package interface_grafica;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import processamento_de_dados.Participantes;
 import processamento_de_dados.Participantes_processados;
 import processamento_de_dados.Salas;
+import processamento_de_dados.Salas_participantes;
 import processamento_de_dados.Salas_processadas;
 
 
@@ -23,6 +25,7 @@ public class Janela_Principal extends javax.swing.JFrame {
     ArrayList<Participantes> lista_partc;
     ArrayList<Salas_processadas> lista_salasproc;
     ArrayList<Participantes_processados> lista_partcproc;
+    ArrayList<Salas_participantes> lista_part_sala;
     int status;
     /**
      * Creates new form Janela_Principal
@@ -34,15 +37,18 @@ public class Janela_Principal extends javax.swing.JFrame {
         lista_partc = new ArrayList();
         lista_salasproc = new ArrayList();
         lista_partcproc = new ArrayList();
+        lista_part_sala = new ArrayList();
         
-        Salas S = new Salas(lista_salas.size()+1,"Café 1 Teste","Café",2);
+        Salas S = new Salas(lista_salas.size()+1,"Café 1 Teste","Café",5);
                     lista_salas.add(S);
-        S = new Salas(lista_salas.size()+1,"Café 2 Teste","Café",1);
+        S = new Salas(lista_salas.size()+1,"Café 2 Teste","Café",4);
                     lista_salas.add(S);
-        S = new Salas(lista_salas.size()+1,"Evento 1 Teste","Evento",1);
+        S = new Salas(lista_salas.size()+1,"Evento 1 Teste","Evento",3);
                     lista_salas.add(S);
-        S = new Salas(lista_salas.size()+1,"Evento 2 Teste","Evento",2);
+        S = new Salas(lista_salas.size()+1,"Evento 2 Teste","Evento",3);
                     lista_salas.add(S);
+        S = new Salas(lista_salas.size()+1,"Evento 3 Teste","Evento",2);
+                    lista_salas.add(S);            
         LoadTableSalas();
                     
                     
@@ -51,6 +57,16 @@ public class Janela_Principal extends javax.swing.JFrame {
         P = new Participantes("Participante", "Número 2", lista_partc.size()+1);
                 lista_partc.add(P);
         P = new Participantes("Participante", "Número 3", lista_partc.size()+1);
+                lista_partc.add(P);
+        P = new Participantes("Participante", "Número 4", lista_partc.size()+1);
+                lista_partc.add(P);
+        P = new Participantes("Participante", "Número 5", lista_partc.size()+1);
+                lista_partc.add(P);
+        P = new Participantes("Participante", "Número 6", lista_partc.size()+1);
+                lista_partc.add(P);
+        P = new Participantes("Participante", "Número 7", lista_partc.size()+1);
+                lista_partc.add(P);
+        P = new Participantes("Participante", "Número 8", lista_partc.size()+1);
                 lista_partc.add(P);
         LoadTablePartc();
     }
@@ -123,9 +139,18 @@ public class Janela_Principal extends javax.swing.JFrame {
         }
         tbl_salproc.setModel(modelo);
     }
+    
+    private void LoadTableSalasPart(){
         
-    
-    
+        DefaultTableModel modelo = new DefaultTableModel(new Object[]{"Nome","Sobrenome"},0);
+        
+        for(int i=0;i<lista_part_sala.size();i++){
+            Object linha[] = new Object[]{lista_part_sala.get(i).getNome(),
+                                          lista_part_sala.get(i).getSobrenome()};
+            modelo.addRow(linha);                                
+        }
+        tbl_sal_part.setModel(modelo);
+    }    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -172,6 +197,9 @@ public class Janela_Principal extends javax.swing.JFrame {
         aba_consulta_salas = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbl_salproc = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tbl_sal_part = new javax.swing.JTable();
         aba_consulta_participantes = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbl_partproc = new javax.swing.JTable();
@@ -362,7 +390,7 @@ public class Janela_Principal extends javax.swing.JFrame {
         aba_salasLayout.setVerticalGroup(
             aba_salasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aba_salasLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                 .addGap(24, 24, 24)
                 .addGroup(aba_salasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_sal_novo)
@@ -528,7 +556,7 @@ public class Janela_Principal extends javax.swing.JFrame {
         aba_participantesLayout.setVerticalGroup(
             aba_participantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aba_participantesLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                 .addGap(24, 24, 24)
                 .addGroup(aba_participantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_part_novo)
@@ -564,6 +592,11 @@ public class Janela_Principal extends javax.swing.JFrame {
             }
         });
         tbl_salproc.getTableHeader().setReorderingAllowed(false);
+        tbl_salproc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_salprocMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tbl_salproc);
         if (tbl_salproc.getColumnModel().getColumnCount() > 0) {
             tbl_salproc.getColumnModel().getColumn(0).setResizable(false);
@@ -571,17 +604,68 @@ public class Janela_Principal extends javax.swing.JFrame {
             tbl_salproc.getColumnModel().getColumn(2).setResizable(false);
         }
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta de Sala"));
+
+        tbl_sal_part.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nome", "Sobrenome"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbl_sal_part.getTableHeader().setReorderingAllowed(false);
+        tbl_sal_part.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_sal_partMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tbl_sal_part);
+        if (tbl_sal_part.getColumnModel().getColumnCount() > 0) {
+            tbl_sal_part.getColumnModel().getColumn(0).setResizable(false);
+            tbl_sal_part.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tbl_sal_part.getColumnModel().getColumn(1).setResizable(false);
+        }
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout aba_consulta_salasLayout = new javax.swing.GroupLayout(aba_consulta_salas);
         aba_consulta_salas.setLayout(aba_consulta_salasLayout);
         aba_consulta_salasLayout.setHorizontalGroup(
             aba_consulta_salasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
+            .addComponent(jScrollPane3)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         aba_consulta_salasLayout.setVerticalGroup(
             aba_consulta_salasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aba_consulta_salasLayout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         aba_sub_consulta.addTab("Salas", aba_consulta_salas);
@@ -628,9 +712,7 @@ public class Janela_Principal extends javax.swing.JFrame {
         );
         aba_consulta_participantesLayout.setVerticalGroup(
             aba_consulta_participantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(aba_consulta_participantesLayout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
         );
 
         aba_sub_consulta.addTab("Participantes", aba_consulta_participantes);
@@ -655,7 +737,7 @@ public class Janela_Principal extends javax.swing.JFrame {
         aba_consultaLayout.setVerticalGroup(
             aba_consultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aba_consultaLayout.createSequentialGroup()
-                .addComponent(aba_sub_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(aba_sub_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(con_btn_gerareventos))
         );
@@ -969,7 +1051,7 @@ public class Janela_Principal extends javax.swing.JFrame {
         btn_part_excluir.setEnabled(false);
         
         LoadTablePartc();
-    
+        
     }//GEN-LAST:event_btn_part_excluirActionPerformed
 
     private void tbl_partMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_partMouseClicked
@@ -993,9 +1075,15 @@ public class Janela_Principal extends javax.swing.JFrame {
         int lotacao_maxima_sala;
         int lotacao_maxima_sala_total = 0;
         int sala_menor = lista_salas.get(0).getLotacao();
-        int numero_salas = 0;
-        int contador = 0;
-        int contador2 = 1;      
+        lista_salasproc.removeAll(lista_salasproc);
+        lista_partcproc.removeAll(lista_partcproc);
+        LoadTableSalasPc();
+        LoadTablePartcPc();
+        
+        String Etapa1;
+        String Etapa2;
+        String Intervalo1;
+        String Intervalo2;
         
         for (int i = 0;i<2;i++){
             if (lista_salas.get(i).getLotacao() < sala_menor){
@@ -1060,28 +1148,117 @@ public class Janela_Principal extends javax.swing.JFrame {
         
         else{
             
-            for (int i=0; i<lotacao_maxima_sala_total; i++){
-                
-                
-                
-            }
+            int contador1 = 2;
+            int contador2 = 2;
+            int contador3 = 0;
+            int contador4 = 0;
+            int metade = lista_partc.size()/2;
             
-            
-            
-            
-            /*for (int i = 2;i<lista_salas.size();i++){
-                numero_salas = numero_salas + 1;
-            }
-            for (int i = 0;i<lista_partc.size();i++){
-                if (contador == numero_salas +1){
-                    contador = 0;
+                     
+            for (int i=0; i<metade; i++){
+                if(contador1 == lista_salas.size()){
+                    contador1 = 2;
                 }
+                if(contador2 == lista_salas.size()){
+                    contador2 = 2;
+                }
+                if(contador3 > 1){
+                    contador3 = 0;
+                }
+                if(contador4 > 1){
+                    contador4 = 0;
+                }
+                Etapa1 = lista_salas.get(contador1).getNome();
+                Intervalo1 = lista_salas.get(contador3).getNome();
+                Etapa2 = lista_salas.get(contador2).getNome();
+                Intervalo2 = lista_salas.get(contador4).getNome();
+                Salas_participantes Ps = new Salas_participantes(Etapa1, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                lista_part_sala.add(Ps);
+                Ps = new Salas_participantes(Etapa2, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                lista_part_sala.add(Ps);
+                Ps = new Salas_participantes(Intervalo1, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                lista_part_sala.add(Ps);
+                Ps = new Salas_participantes(Intervalo2, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                lista_part_sala.add(Ps);
+                Participantes_processados Pc = new Participantes_processados(lista_partc.get(i).getNome(),lista_partc.get(i).getSobrenome(),Etapa1,Intervalo1,Etapa2,Intervalo2);
+                lista_partcproc.add(Pc);
+                
+                contador1++;
+                contador2++;
+                contador3++;
+                contador4++;
+                
+            }
             
-            Pc = new Participantes_processados(lista_partc.get(i).getNome(),lista_partc.get(i).getSobrenome(),lista_salas.get(i).getNome(),"","","");
-            }*/
+            contador1 = 2;
+            contador2 = 3;
+            contador3 = 0;
+            contador4 = 1;
+            for (int i=metade; i<lista_partc.size(); i++){
+                if(contador1 == lista_salas.size()){
+                    contador1 = 2;
+                }
+                if(contador2 == lista_salas.size()){
+                    contador2 = 2;
+                }
+                if(contador3 > 1){
+                    contador3 = 0;
+                }
+                if(contador4 > 1){
+                    contador4 = 0;
+                }
+                
+                Etapa1 = lista_salas.get(contador1).getNome();
+                Intervalo1 = lista_salas.get(contador3).getNome();
+                Etapa2 = lista_salas.get(contador2).getNome();
+                Intervalo2 = lista_salas.get(contador4).getNome();
+                Salas_participantes Ps = new Salas_participantes(Etapa1, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                lista_part_sala.add(Ps);
+                Ps = new Salas_participantes(Etapa2, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                lista_part_sala.add(Ps); 
+                Ps = new Salas_participantes(Intervalo1, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                lista_part_sala.add(Ps);
+                Ps = new Salas_participantes(Intervalo2, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                lista_part_sala.add(Ps);
+                Participantes_processados Pc = new Participantes_processados(lista_partc.get(i).getNome(),lista_partc.get(i).getSobrenome(),Etapa1,Intervalo1,Etapa2,Intervalo2);
+                lista_partcproc.add(Pc);
+                
+                contador1++;
+                contador2++;
+                contador3++;
+                contador4++;
+                
+            }
+            
+            
+            
+            
+            
+            
+            LoadTablePartcPc();            
         }
         
     }//GEN-LAST:event_con_btn_gerareventosActionPerformed
+
+    private void tbl_sal_partMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_sal_partMouseClicked
+        
+    }//GEN-LAST:event_tbl_sal_partMouseClicked
+
+    private void tbl_salprocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_salprocMouseClicked
+        DefaultTableModel modelo = new DefaultTableModel(new Object[]{"Nome","Sobrenome"},0);
+        int indice = tbl_salproc.getSelectedRow();
+        if(indice>=0 && indice<lista_salasproc.size()){
+            System.out.print(lista_part_sala.size());
+            for (int i=0;i<lista_part_sala.size();i++){
+                if (lista_part_sala.get(i).getSala().equals(lista_salasproc.get(indice).getNome())){
+                    Object linha[] = new Object[]{lista_part_sala.get(i).getNome(),
+                                                  lista_part_sala.get(i).getSobrenome()};
+                    modelo.addRow(linha);                                
+                }
+            }
+            tbl_sal_part.setModel(modelo);
+        }
+    }//GEN-LAST:event_tbl_salprocMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1137,10 +1314,12 @@ public class Janela_Principal extends javax.swing.JFrame {
     private javax.swing.JButton btn_sal_novo;
     private javax.swing.JButton con_btn_gerareventos;
     private javax.swing.ButtonGroup grupo_sal_tipo;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lab_part_nome;
     private javax.swing.JLabel lab_part_sobrenome;
     private javax.swing.JLabel lab_sal_lotacao;
@@ -1154,10 +1333,12 @@ public class Janela_Principal extends javax.swing.JFrame {
     private javax.swing.JTable tbl_part;
     private javax.swing.JTable tbl_partproc;
     private javax.swing.JTable tbl_sal;
+    private javax.swing.JTable tbl_sal_part;
     private javax.swing.JTable tbl_salproc;
     private javax.swing.JTextField txt_part_nome;
     private javax.swing.JTextField txt_part_sobrenome;
     private javax.swing.JTextField txt_sal_lotacao;
     private javax.swing.JTextField txt_sal_nome;
     // End of variables declaration//GEN-END:variables
+
 }

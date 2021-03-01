@@ -23,17 +23,13 @@ public class Salas {
     public Salas(){
         lista_salas = new ArrayList();
     }
-
-
     
     public Salas(int numero, String nome, String tipo, int lotacao) {
         this.numero = numero;
         this.nome = nome;
         this.tipo = tipo;
-        this.lotacao = lotacao;
-        
-    }
-   
+        this.lotacao = lotacao;        
+    }   
 
     public int getNumero() {
         return numero;
