@@ -94,6 +94,25 @@ public class Janela_Principal extends javax.swing.JFrame {
         tbl_part.setModel(modelo);
     }
     
+    private void LoadTablePartcPc(){
+        
+        DefaultTableModel modelo = new DefaultTableModel(new Object[]{"Nome","Sobrenome","Etapa 1","Intervalo 1","Etapa 2","Intervalo 2",},0);
+        
+        for(int i=0;i<lista_partcproc.size();i++){
+            Object linha[] = new Object[]{lista_partcproc.get(i).getNome(),
+                                          lista_partcproc.get(i).getSobrenome(),
+                                          lista_partcproc.get(i).getEtapa1(),
+                                          lista_partcproc.get(i).getIntervalo1(),
+                                          lista_partcproc.get(i).getEtapa2(),
+                                          lista_partcproc.get(i).getIntervalo2()};            
+        }
+    }
+    
+    
+    private void LoadTableSalasPc(){
+        
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -559,7 +578,7 @@ public class Janela_Principal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome", "Sobrenome", "Sala 1", "Café 1", "Sala 2", "Café 2"
+                "Nome", "Sobrenome", "Etapa 1", "Intervalo 1", "Etapa 2", "Intervalo 2"
             }
         ) {
             Class[] types = new Class [] {
@@ -653,6 +672,8 @@ public class Janela_Principal extends javax.swing.JFrame {
     private void btn_sal_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sal_editarActionPerformed
         status = 2;
                 
+        tbl_sal.setEnabled(false);
+        
         txt_sal_nome.setEnabled(true);
         txt_sal_lotacao.setEnabled(true);
         
@@ -671,7 +692,9 @@ public class Janela_Principal extends javax.swing.JFrame {
         
         txt_part_nome.setEnabled(true);
         txt_part_sobrenome.setEnabled(true);
-                
+        
+        tbl_part.setEnabled(false);
+        
         btn_part_cadastrar.setEnabled(true);
         btn_part_cancelar.setEnabled(true);
         btn_part_editar.setEnabled(false);
@@ -688,6 +711,8 @@ public class Janela_Principal extends javax.swing.JFrame {
             txt_part_sobrenome.setEnabled(true);
             txt_part_sobrenome.setText("");
         
+            tbl_part.setEnabled(false);
+            
             btn_part_cadastrar.setEnabled(true);
             btn_part_cancelar.setEnabled(true);
             btn_part_editar.setEnabled(false);
@@ -698,6 +723,8 @@ public class Janela_Principal extends javax.swing.JFrame {
 
     private void btn_sal_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sal_novoActionPerformed
         status = 1;
+        
+        tbl_sal.setEnabled(false);
         
         txt_sal_nome.setText("");
         txt_sal_nome.setEnabled(true);
@@ -734,6 +761,7 @@ public class Janela_Principal extends javax.swing.JFrame {
         btn_sal_editar.setEnabled(false);
         btn_sal_novo.setEnabled(true);
     
+        tbl_sal.setEnabled(true);
     }//GEN-LAST:event_btn_sal_cancelarActionPerformed
 
     private void btn_part_cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_part_cadastrarActionPerformed
@@ -768,6 +796,8 @@ public class Janela_Principal extends javax.swing.JFrame {
         txt_part_nome.setText("");
         txt_part_sobrenome.setEnabled(false);
         txt_part_sobrenome.setText("");
+        
+        tbl_part.setEnabled(false);
         
         btn_part_cadastrar.setEnabled(false);
         btn_part_cancelar.setEnabled(false);
@@ -829,6 +859,8 @@ public class Janela_Principal extends javax.swing.JFrame {
         btn_sal_excluir.setEnabled(false);
         btn_sal_novo.setEnabled(true);
         
+        tbl_sal.setEnabled(true);
+        
         txt_sal_nome.setText("");
         txt_sal_nome.setEnabled(false);
         txt_sal_lotacao.setText("");
@@ -845,6 +877,8 @@ public class Janela_Principal extends javax.swing.JFrame {
         txt_part_sobrenome.setEnabled(false);
         txt_part_sobrenome.setText("");
         
+        tbl_part.setEnabled(false);
+        
         btn_part_cadastrar.setEnabled(false);
         btn_part_cancelar.setEnabled(false);
         btn_part_editar.setEnabled(false);
@@ -854,22 +888,25 @@ public class Janela_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_part_cancelarActionPerformed
 
     private void tbl_salMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_salMouseClicked
-        int indice = tbl_sal.getSelectedRow();
-        if(indice>=0 && indice<lista_salas.size()){
-            Salas S = lista_salas.get(indice);
-            txt_sal_nome.setText(S.getNome());
-            txt_sal_lotacao.setText(String.valueOf(S.getLotacao()));
-            String tipo = S.getTipo();
-            if(tipo.equals("Café")){
-                rad_sal_cafe.setSelected(true);
-            }
-            else if(tipo.equals("Evento")){
-                rad_sal_evento.setSelected(true);
-            }
+        if (tbl_sal.isEnabled()){
             
-            btn_sal_editar.setEnabled(true);
-            btn_sal_excluir.setEnabled(true);
+            int indice = tbl_sal.getSelectedRow();
+            if(indice>=0 && indice<lista_salas.size()){
+                Salas S = lista_salas.get(indice);
+                txt_sal_nome.setText(S.getNome());
+                txt_sal_lotacao.setText(String.valueOf(S.getLotacao()));
+                String tipo = S.getTipo();
+                if(tipo.equals("Café")){
+                    rad_sal_cafe.setSelected(true);
+                }
+                else if(tipo.equals("Evento")){
+                    rad_sal_evento.setSelected(true);
+                }
             
+                btn_sal_editar.setEnabled(true);
+                btn_sal_excluir.setEnabled(true);
+            
+            }
         }
     }//GEN-LAST:event_tbl_salMouseClicked
 
@@ -923,15 +960,17 @@ public class Janela_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_part_excluirActionPerformed
 
     private void tbl_partMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_partMouseClicked
-        int indice = tbl_part.getSelectedRow();
-        if(indice>=0 && indice<lista_partc.size()){
-            Participantes P = lista_partc.get(indice);
-            txt_part_nome.setText(P.getNome());
-            txt_part_sobrenome.setText(String.valueOf(P.getSobrenome()));
+        if (tbl_part.isEnabled()){
+            int indice = tbl_part.getSelectedRow();
+            if(indice>=0 && indice<lista_partc.size()){
+                Participantes P = lista_partc.get(indice);
+                txt_part_nome.setText(P.getNome());
+                txt_part_sobrenome.setText(String.valueOf(P.getSobrenome()));
             
-            btn_part_editar.setEnabled(true);
-            btn_part_excluir.setEnabled(true);
+                btn_part_editar.setEnabled(true);
+                btn_part_excluir.setEnabled(true);
             
+            }
         }
     }//GEN-LAST:event_tbl_partMouseClicked
 
@@ -939,6 +978,11 @@ public class Janela_Principal extends javax.swing.JFrame {
         int lotacao_maxima_cafe;
         int lotacao_maxima_sala = 0;
         int sala_menor = 0;
+        int numero_salas = 0;
+        int contador = 0;
+        int contador2 = 1;
+        
+        Participantes_processados Pc = new Participantes_processados();
        
         for (int i = 2;i<lista_salas.size();i++){
             if (lista_salas.get(i).getLotacao() < sala_menor){
@@ -947,8 +991,8 @@ public class Janela_Principal extends javax.swing.JFrame {
         }
         for (int i = 2;i<lista_salas.size();i++){
             if (lista_salas.get(i).getLotacao() > sala_menor){
-                lotacao_maxima_sala = sala_menor + 1;
-            }
+                lotacao_maxima_sala = sala_menor + 1;            
+            }           
             lotacao_maxima_sala = lotacao_maxima_sala + lista_salas.get(i).getLotacao();
         }
         
@@ -973,6 +1017,21 @@ public class Janela_Principal extends javax.swing.JFrame {
         
         else{
             
+            
+            
+            
+            
+            
+            /*for (int i = 2;i<lista_salas.size();i++){
+                numero_salas = numero_salas + 1;
+            }
+            for (int i = 0;i<lista_partc.size();i++){
+                if (contador == numero_salas +1){
+                    contador = 0;
+                }
+            
+            Pc = new Participantes_processados(lista_partc.get(i).getNome(),lista_partc.get(i).getSobrenome(),lista_salas.get(i).getNome(),"","","");
+            }*/
         }
         
     }//GEN-LAST:event_con_btn_gerareventosActionPerformed

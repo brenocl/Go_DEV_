@@ -18,11 +18,11 @@ public class Salas_processadas {
     private int alocacao;
     ArrayList<Salas_processadas> lista_salasproc;
 
-    public Salas_processadas(String nome, String tipo, int alocacao, ArrayList<Salas_processadas> lista_salasproc) {
+    public Salas_processadas(String nome, String tipo, int alocacao) {
         this.nome = nome;
         this.tipo = tipo;
         this.alocacao = alocacao;
-        this.lista_salasproc = lista_salasproc;
+        lista_salasproc = new ArrayList();
     }
     
     public Salas_processadas(){

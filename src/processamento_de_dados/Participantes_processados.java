@@ -15,11 +15,26 @@ public class Participantes_processados {
     
     private String nome;
     private String sobrenome;
-    private String sala1;
-    private String cafe1;
-    private String sala2;
-    private String cafe2;
+    private String etapa1;
+    private String intervalo1;
+    private String etapa2;
+    private String intervalo2;
     ArrayList<Participantes_processados> lista_partcproc;
+
+    public Participantes_processados(String nome, String sobrenome, String etapa1, String intervalo1, String etapa2, String intervalo2) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.etapa1 = etapa1;
+        this.intervalo1 = intervalo1;
+        this.etapa2 = etapa2;
+        this.intervalo2 = intervalo2;
+        lista_partcproc = new ArrayList();
+    }
+    
+    
+    public Participantes_processados(){
+        lista_partcproc = new ArrayList();
+    }
 
     public String getNome() {
         return nome;
@@ -37,36 +52,36 @@ public class Participantes_processados {
         this.sobrenome = sobrenome;
     }
 
-    public String getSala1() {
-        return sala1;
+    public String getEtapa1() {
+        return etapa1;
     }
 
-    public void setSala1(String sala1) {
-        this.sala1 = sala1;
+    public void setEtapa1(String etapa1) {
+        this.etapa1 = etapa1;
     }
 
-    public String getCafe1() {
-        return cafe1;
+    public String getIntervalo1() {
+        return intervalo1;
     }
 
-    public void setCafe1(String cafe1) {
-        this.cafe1 = cafe1;
+    public void setIntervalo1(String intervalo1) {
+        this.intervalo1 = intervalo1;
     }
 
-    public String getSala2() {
-        return sala2;
+    public String getEtapa2() {
+        return etapa2;
     }
 
-    public void setSala2(String sala2) {
-        this.sala2 = sala2;
+    public void setEtapa2(String etapa2) {
+        this.etapa2 = etapa2;
     }
 
-    public String getCafe2() {
-        return cafe2;
+    public String getIntervalo2() {
+        return intervalo2;
     }
 
-    public void setCafe2(String cafe2) {
-        this.cafe2 = cafe2;
+    public void setIntervalo2(String intervalo2) {
+        this.intervalo2 = intervalo2;
     }
 
     public ArrayList<Participantes_processados> getLista_partcproc() {
