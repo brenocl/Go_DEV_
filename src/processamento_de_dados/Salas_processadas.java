@@ -22,7 +22,7 @@ public class Salas_processadas {
         this.nome = nome;
         this.tipo = tipo;
         this.alocacao = alocacao;
-        lista_salasproc = new ArrayList();
+        
     }
     
     public Salas_processadas(){

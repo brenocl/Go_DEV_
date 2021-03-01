@@ -25,7 +25,7 @@ public class Participantes {
     
       
     public Participantes(String nome, String sobrenome, int numero) {
-        lista_partc = new ArrayList();
+        
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.numero = numero;

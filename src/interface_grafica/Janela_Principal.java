@@ -104,14 +104,27 @@ public class Janela_Principal extends javax.swing.JFrame {
                                           lista_partcproc.get(i).getEtapa1(),
                                           lista_partcproc.get(i).getIntervalo1(),
                                           lista_partcproc.get(i).getEtapa2(),
-                                          lista_partcproc.get(i).getIntervalo2()};            
+                                          lista_partcproc.get(i).getIntervalo2()}; 
+            modelo.addRow(linha);
         }
+        tbl_partproc.setModel(modelo);
     }
     
     
     private void LoadTableSalasPc(){
         
+        DefaultTableModel modelo = new DefaultTableModel(new Object[]{"Nome","Tipo","Alocação"},0);
+        
+        for(int i=0;i<lista_salasproc.size();i++){
+            Object linha[] = new Object[]{lista_salasproc.get(i).getNome(),
+                                          lista_salasproc.get(i).getTipo(),
+                                          lista_salasproc.get(i).getAlocacao()};
+            modelo.addRow(linha);                                
+        }
+        tbl_salproc.setModel(modelo);
     }
+        
+    
     
     
     /**
@@ -976,15 +989,38 @@ public class Janela_Principal extends javax.swing.JFrame {
 
     private void con_btn_gerareventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_con_btn_gerareventosActionPerformed
         int lotacao_maxima_cafe;
+        int lotacao_maxima_cafe_total = 0;
         int lotacao_maxima_sala;
         int lotacao_maxima_sala_total = 0;
-        int sala_menor = 0;
+        int sala_menor = lista_salas.get(0).getLotacao();
         int numero_salas = 0;
         int contador = 0;
-        int contador2 = 1;
+        int contador2 = 1;      
         
-        Participantes_processados Pc = new Participantes_processados();
-        Salas_processadas Sp = new Salas_processadas();
+        for (int i = 0;i<2;i++){
+            if (lista_salas.get(i).getLotacao() < sala_menor){
+                sala_menor = lista_salas.get(i).getLotacao();
+                
+            }                  
+        }
+        for (int i = 0;i<2;i++){
+            if (lista_salas.get(i).getLotacao() > sala_menor){
+                lotacao_maxima_cafe = sala_menor + 1;
+                Salas_processadas Sp = new Salas_processadas("","",lotacao_maxima_cafe);
+                lista_salasproc.add(Sp);
+            }
+            else{
+                lotacao_maxima_cafe = lista_salas.get(i).getLotacao();
+                Salas_processadas Sp = new Salas_processadas("","",lotacao_maxima_cafe);
+                lista_salasproc.add(Sp);
+            }                
+            
+            lotacao_maxima_cafe_total = lotacao_maxima_cafe + lotacao_maxima_cafe_total;
+            lista_salasproc.get(i).setNome(lista_salas.get(i).getNome());
+            lista_salasproc.get(i).setTipo(lista_salas.get(i).getTipo());            
+        }
+              
+        sala_menor = lista_salas.get(2).getLotacao();
         
         for (int i = 2;i<lista_salas.size();i++){
             if (lista_salas.get(i).getLotacao() < sala_menor){
@@ -994,11 +1030,13 @@ public class Janela_Principal extends javax.swing.JFrame {
         for (int i = 2;i<lista_salas.size();i++){
             if (lista_salas.get(i).getLotacao() > sala_menor){
                 lotacao_maxima_sala = sala_menor + 1;
-                lista_salasproc.get(i).setAlocacao(lotacao_maxima_sala);
+                Salas_processadas Sp = new Salas_processadas("","",lotacao_maxima_sala);
+                lista_salasproc.add(Sp);
             }
             else{
                 lotacao_maxima_sala = lista_salas.get(i).getLotacao();
-                lista_salasproc.get(i).setAlocacao(lotacao_maxima_sala);
+                Salas_processadas Sp = new Salas_processadas("","",lotacao_maxima_sala);
+                lista_salasproc.add(Sp);
             }                
             
             lotacao_maxima_sala_total = lotacao_maxima_sala + lotacao_maxima_sala_total;
@@ -1007,27 +1045,12 @@ public class Janela_Principal extends javax.swing.JFrame {
             
         }
         
-        if (lista_salas.get(0).getLotacao() < lista_salas.get(1).getLotacao()){
-            lotacao_maxima_cafe = lista_salas.get(0).getLotacao() * 2 + 1;
-            lista_salasproc.get(0).setAlocacao(lista_salas.get(0).getLotacao());
-            lista_salasproc.get(1).setAlocacao(lista_salas.get(1).getLotacao()+1);
-        }
-        else if (lista_salas.get(0).getLotacao() > lista_salas.get(1).getLotacao()){
-            lotacao_maxima_cafe = lista_salas.get(1).getLotacao() * 2 + 1;
-            lista_salasproc.get(1).setAlocacao(lista_salas.get(1).getLotacao());
-            lista_salasproc.get(0).setAlocacao(lista_salas.get(0).getLotacao()+1);
-        }
-        else{
-            lotacao_maxima_cafe = lista_salas.get(1).getLotacao() * 2;
-            lista_salasproc.get(1).setAlocacao(lista_salas.get(1).getLotacao());
-            lista_salasproc.get(0).setAlocacao(lista_salas.get(0).getLotacao());
-        }        
-        
-        
+        LoadTableSalasPc();     
+                
         if (lista_salas.size() < 4){
             JOptionPane.showMessageDialog(this, "O evento não possui a quantidade mínima de salas cadastradas");
         }
-        else if (lista_partc.size() > lotacao_maxima_cafe){
+        else if (lista_partc.size() > lotacao_maxima_cafe_total){
             JOptionPane.showMessageDialog(this, "O evento excedeu a capacidade máxima das salas de café");
         }
         

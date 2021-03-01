@@ -28,7 +28,7 @@ public class Participantes_processados {
         this.intervalo1 = intervalo1;
         this.etapa2 = etapa2;
         this.intervalo2 = intervalo2;
-        lista_partcproc = new ArrayList();
+        
     }
     
     
