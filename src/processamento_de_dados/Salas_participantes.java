@@ -16,16 +16,20 @@ public class Salas_participantes {
     String sala;   
     String nome;
     String sobrenome;
+    String evento;
+
+    
     ArrayList<Salas_participantes> lista_part_sala;
     
     public Salas_participantes(){
         lista_part_sala = new ArrayList();
     }    
 
-    public Salas_participantes(String sala, String nome, String sobrenome) {
+    public Salas_participantes(String sala, String nome, String sobrenome, String evento) {
         this.sala = sala;
         this.nome = nome;
         this.sobrenome = sobrenome;
+        this.evento = evento;
     }    
     
     public String getNome() {
@@ -62,4 +66,12 @@ public class Salas_participantes {
     public void setSala(String sala) {
         this.sala = sala;
     }
+    public String getEvento() {
+        return evento;
+    }
+
+    public void setEvento(String evento) {
+        this.evento = evento;
+    }
+    
 }
