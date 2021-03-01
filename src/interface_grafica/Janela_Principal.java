@@ -1248,7 +1248,7 @@ public class Janela_Principal extends javax.swing.JFrame {
         DefaultTableModel modelo = new DefaultTableModel(new Object[]{"Nome","Sobrenome"},0);
         int indice = tbl_salproc.getSelectedRow();
         if(indice>=0 && indice<lista_salasproc.size()){
-            System.out.print(lista_part_sala.size());
+            
             for (int i=0;i<lista_part_sala.size();i++){
                 if (lista_part_sala.get(i).getSala().equals(lista_salasproc.get(indice).getNome())){
                     Object linha[] = new Object[]{lista_part_sala.get(i).getNome(),
