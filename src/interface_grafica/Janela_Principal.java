@@ -972,7 +972,7 @@ public class Janela_Principal extends javax.swing.JFrame {
         txt_part_sobrenome.setEnabled(false);
         txt_part_sobrenome.setText("");
         
-        tbl_part.setEnabled(false);
+        tbl_part.setEnabled(true);
         
         btn_part_cadastrar.setEnabled(false);
         btn_part_cancelar.setEnabled(false);
@@ -1172,13 +1172,13 @@ public class Janela_Principal extends javax.swing.JFrame {
                 Intervalo1 = lista_salas.get(contador3).getNome();
                 Etapa2 = lista_salas.get(contador2).getNome();
                 Intervalo2 = lista_salas.get(contador4).getNome();
-                Salas_participantes Ps = new Salas_participantes(Etapa1, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                Salas_participantes Ps = new Salas_participantes(Etapa1, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome(), "Etapa 1");
                 lista_part_sala.add(Ps);
-                Ps = new Salas_participantes(Etapa2, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                Ps = new Salas_participantes(Etapa2, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome(), "Etapa 2");
                 lista_part_sala.add(Ps);
-                Ps = new Salas_participantes(Intervalo1, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                Ps = new Salas_participantes(Intervalo1, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome(), "Intervalo 1");
                 lista_part_sala.add(Ps);
-                Ps = new Salas_participantes(Intervalo2, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                Ps = new Salas_participantes(Intervalo2, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome(), "Intervalo 2");
                 lista_part_sala.add(Ps);
                 Participantes_processados Pc = new Participantes_processados(lista_partc.get(i).getNome(),lista_partc.get(i).getSobrenome(),Etapa1,Intervalo1,Etapa2,Intervalo2);
                 lista_partcproc.add(Pc);
@@ -1212,13 +1212,13 @@ public class Janela_Principal extends javax.swing.JFrame {
                 Intervalo1 = lista_salas.get(contador3).getNome();
                 Etapa2 = lista_salas.get(contador2).getNome();
                 Intervalo2 = lista_salas.get(contador4).getNome();
-                Salas_participantes Ps = new Salas_participantes(Etapa1, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                Salas_participantes Ps = new Salas_participantes(Etapa1, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome(), "Etapa 1");
                 lista_part_sala.add(Ps);
-                Ps = new Salas_participantes(Etapa2, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                Ps = new Salas_participantes(Etapa2, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome(), "Etapa 2");
                 lista_part_sala.add(Ps); 
-                Ps = new Salas_participantes(Intervalo1, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                Ps = new Salas_participantes(Intervalo1, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome(), "Intervalo 1");
                 lista_part_sala.add(Ps);
-                Ps = new Salas_participantes(Intervalo2, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome());
+                Ps = new Salas_participantes(Intervalo2, lista_partc.get(i).getNome(), lista_partc.get(i).getSobrenome(), "Intervalo 2");
                 lista_part_sala.add(Ps);
                 Participantes_processados Pc = new Participantes_processados(lista_partc.get(i).getNome(),lista_partc.get(i).getSobrenome(),Etapa1,Intervalo1,Etapa2,Intervalo2);
                 lista_partcproc.add(Pc);
@@ -1245,14 +1245,15 @@ public class Janela_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_sal_partMouseClicked
 
     private void tbl_salprocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_salprocMouseClicked
-        DefaultTableModel modelo = new DefaultTableModel(new Object[]{"Nome","Sobrenome"},0);
+        DefaultTableModel modelo = new DefaultTableModel(new Object[]{"Nome","Sobrenome","Evento"},0);
         int indice = tbl_salproc.getSelectedRow();
         if(indice>=0 && indice<lista_salasproc.size()){
             
             for (int i=0;i<lista_part_sala.size();i++){
                 if (lista_part_sala.get(i).getSala().equals(lista_salasproc.get(indice).getNome())){
                     Object linha[] = new Object[]{lista_part_sala.get(i).getNome(),
-                                                  lista_part_sala.get(i).getSobrenome()};
+                                                  lista_part_sala.get(i).getSobrenome(),
+                                                  lista_part_sala.get(i).getEvento()};
                     modelo.addRow(linha);                                
                 }
             }
